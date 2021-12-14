@@ -1,5 +1,17 @@
 @url = http://localhost:3003
 
 ### simple users READ
-    GET {{url}}/currentuser
-    content-type: application/json
+GET {{url}}/currentuser
+content-type: application/json
+
+### simple users READ
+POST {{url}}/login
+content-type: application/json
+
+{
+    "username": "ma"
+}
+
+### simple users READ
+GET {{url}}/logout
+content-type: application/json
