@@ -52,7 +52,7 @@ app.post("/login", async (req, res) => {
   }
   req.session.user = user;
   req.session.save();
-  res.json(user);
+  res.json({user});
 });
 
 app.post("/signup", async (req, res) => {
@@ -67,7 +67,7 @@ app.post("/signup", async (req, res) => {
     const salt = await bcrypt.genSalt();
     const hash = await bcrypt.hash(frontUser.password1, salt);
     const dbuser = await UserModel.create({
-      login: frontUser.login,
+      username: frontUser.username,
       firstName: frontUser.firstName,
       lastName: frontUser.lastName,
       email: frontUser.email,
@@ -84,7 +84,7 @@ app.get("/currentuser", async (req, res) => {
   console.log("hello");
   let user = req.session.user;
   if (!user) {
-    user = await UserModel.findOne({ login: "anonymousUser" });
+    user = await UserModel.findOne({ username: "anonymousUser" });
   }
   res.json({
     user,
@@ -123,7 +123,7 @@ app.get("/notyetapprovedusers", async (req, res) => {
 
 app.get("/logout", async (req, res) => {
   req.session.destroy();
-  const user = await UserModel.findOne({ login: "anonymousUser" });
+  const user = await UserModel.findOne({ username: "anonymousUser" });
   res.json({
     user,
   });
